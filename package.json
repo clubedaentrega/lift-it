@@ -2,7 +2,7 @@
 	"name": "lift-it",
 	"version": "0.0.0",
 	"author": "Sitegui <sitegui@sitegui.com.br>",
-	"description": "WIP",
+	"description": "Forget about maintaining routes files, use dynamic routes created from files in a folder",
 	"main": "./index.js",
 	"repository": {
 		"type": "git",
