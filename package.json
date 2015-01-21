@@ -9,7 +9,9 @@
 		"url": "https://github.com/clubedaentrega/lift-it"
 	},
 	"keywords": [],
-	"dependencies": {},
+	"dependencies": {
+		"run-it": "^1.1.0"
+	},
 	"license": "MIT",
 	"engines": {
 		"node": ">=0.10"
