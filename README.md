@@ -78,17 +78,17 @@ The available bundled plugins are:
 ## Docs
 ### require('lift-it')
 A function with one parameter, the folder path to scan: `require('lift-it')(folder)`.
-Returns a `lift` builder.
+Returns a `lifter` object.
 
-### lift.use(plugIn)
+### lifter.use(plugIn)
 Add the given plugin to the lift process. Read more about available and custom plugins bellow
 
-### lift.profile
-### lift.errorClass
-### lift.enableErrorCode
-Change settings of [run-it](https://www.npmjs.com/package/run-it). Must be changed only before `lift.lift()` is called.
+### lifter.profile
+### lifter.errorClass
+### lifter.enableErrorCode
+Change settings of [run-it](https://www.npmjs.com/package/run-it). Must be changed only before `lifter.lift()` is called.
 
-### lift.lift()
+### lifter.lift()
 Run the lift process (sync), throws if any error happens. For each `*.js` file in the target folder, all plugins will be executed in the order they were 'use'd.
 
 This returns a `lifted` object.
@@ -127,13 +127,125 @@ Run this action. This is the same as `lifted.run(action.name, ...args, callback)
 ## Available plugins
 
 ### Profile
-TODO
+If the required file exports `profile` (boolean), this value will overwrite the global `lift.profile`. Get it with `require('lift-it').profile()`.
+
+For example, this file will have profiling always on:
+```js
+module.exports.profile = true
+module.exports.handler = function (body, success, error) {
+	// ...
+}
+```
+
+Use:
+```js
+var liftIt = require('lift-it'),
+	lift = liftIt('./api')
+lift.use(liftIt.profile())
+var api = lift.lift()
+api.run('item/create', item, function (err, response, profileData) {
+	// ...
+})
+```
 
 ### Validate
-TODO
+Add input validation with [validate-fields](https://www.npmjs.org/package/validate-fields). Get it with `require('lift-it').validate(options)`.
+
+`options` is an optional object with the properties displayed bellow (default values indicated):
+```js
+options = {
+	// The export property name
+	exportName: 'fields',
+	// Whether to error out if the file does not export it
+	required: true,
+	// Which argument of 'run' to validate
+	// The default will check the arg0 in: lifted.run(action, arg0, arg1, ..., callback)
+	position: 0,
+	// If lifter.enableErrorCode is true, which code to use in error(code, msg)
+	code: 101,
+	// Let you define your own custom types
+	// See doc on validate-fields module for that
+	defineTypes: function (validate) {},
+	// Options passed to schema.validate() of validate-fields
+	options: {}
+}
+```
+
+Example of a file using it:
+```js
+module.exports.fields = {
+	name: String,
+	value: 'uint'
+}
+module.exports.handler = function (body, success, error) {
+	// ...
+}
+```
+
+```js
+var liftIt = require('lift-it'),
+	lift = liftIt('./api')
+lift.use(liftIt.validate())
+var api = lift.lift()
+api.run('item/create', {}, function (err) {
+	// err is new Error('I was expecting a value in name')
+})
+```
 
 ### Filters
-TODO
+Add support for filters. Filters are functions executed sequentially before the handler. One example of their use is implementing authentication.
+
+Filter handlers are implemented and exported by files in the filter folder. Each file may export as many filters as you want.
+
+See an example of a file implementing two filters:
+```js
+module.exports = function (body, success, error) {
+	// Check auth, read the DB, etc
+	success('Some data I got elsewhere')
+}
+module.exports.double = function (body, success, error) {
+	// Simply change the body input
+	body.value *= 2
+	success()
+}
+```
+
+The `'item/create'` action may use those filters this way:
+```js
+module.exports.filters = ['myFilter', 'myFilter.double']
+module.exports.handler = function (body, moreData, success, error) {
+	// body.value will be doubled
+	// moreData will be the string create by the first filter
+	// ...
+}
+```
+
+If this file path is `'filters/myFilter.js'`, the main file (the one that lifts everything) may be:
+```js
+var liftIt = require('lift-it'),
+	lift = liftIt('./api')
+lift.use(liftIt.filters('./filters'))
+var api = lift.lift()
+api.run('item/create', {value: 10}, function (err, response) {
+	// ...
+})
+```
 
 ## Custom plugins
-TODO
+A plugin is a function like `function (action) {}`. That function is called once for every file that is found in the lifted folder. Creating your own plugin is that simple:
+
+```js
+var myPlugin = function (action) {
+	// do something with the action, like checking something
+	if (action.name.indexOf('drop')) {
+		throw new Error('Sorry, we do not put up with dropping things...')
+	}
+	
+	// add a filter to every action to delay them by 1s
+	action.filters.push(function (body, success) {
+		setTimeout(function () {
+			success()
+		}, 1e3)
+	})
+}
+```

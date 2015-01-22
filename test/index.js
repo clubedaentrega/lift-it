@@ -14,7 +14,7 @@ it('should list all actions', function () {
 	api.actions.should.have.length(1)
 })
 
-it('should let actions be executed', function () {
+it('should let actions be executed', function (done) {
 	api.run('item/create', {
 		name: 'Water',
 		value: 17
@@ -23,5 +23,6 @@ it('should let actions be executed', function () {
 		response.should.be.eql({
 			id: 12
 		})
+		done()
 	})
 })
