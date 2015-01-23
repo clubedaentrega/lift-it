@@ -5,9 +5,6 @@ Forget about maintaining routes files, use dynamic routes created from files in 
 ## Install
 `npm install lift-it --save`
 
-## Status
-This is a **WORK IN PROGRESS**
-
 ## Basic usage
 ```js
 // Lift the 'api' folder
