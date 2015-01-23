@@ -99,7 +99,7 @@ Return an action by name. Return an `action` object (or `null` if not found).
 ### lifted.run(name, ...args, callback)
 Run the action with the given arguments. `callback(err,...output)` is executed when done. The action is executed in its own domain, see [run-it](https://www.npmjs.com/package/run-it) for more info about that.
 
-Throws if (and only if) no action if the given name is found.
+Throws if (and only if) no action with the given name is found.
 
 If profile is enabled, the last argument for `callback` is the profile data.
 
@@ -127,7 +127,7 @@ Run this action. This is the same as `lifted.run(action.name, ...args, callback)
 ## Available plugins
 
 ### Profile
-If the required file exports `profile` (boolean), this value will overwrite the global `lift.profile`. Get it with `require('lift-it').profile()`.
+If the `require`-d file exports `profile` (a boolean), this value will overwrite the global `lift.profile`. Get this plugin with `require('lift-it').profile()`.
 
 For example, this file will have profiling always on:
 ```js
@@ -157,7 +157,7 @@ options = {
 	// The export property name
 	exportName: 'fields',
 	// Whether to error out if the file does not export it
-	required: true,
+	optional: true,
 	// Which argument of 'run' to validate
 	// The default will check the arg0 in: lifted.run(action, arg0, arg1, ..., callback)
 	position: 0,
@@ -193,9 +193,9 @@ api.run('item/create', {}, function (err) {
 ```
 
 ### Filters
-Add support for filters. Filters are functions executed sequentially before the handler. One example of their use is implementing authentication.
+Add support for filters. Filters are functions executed sequentially before the handler. One example of their use is implementing authentication. Get it with `require('lift-it').filters(folder)`.
 
-Filter handlers are implemented and exported by files in the filter folder. Each file may export as many filters as you want.
+Filter handlers are implemented and exported by files in the filters folder. Each of those files may export as many filters as you want.
 
 See an example of a file implementing two filters:
 ```js
@@ -220,7 +220,7 @@ module.exports.handler = function (body, moreData, success, error) {
 }
 ```
 
-If this file path is `'filters/myFilter.js'`, the main file (the one that lifts everything) may be:
+If this filter file path is `'filters/myFilter.js'`, the main file (the one that lifts everything) may be:
 ```js
 var liftIt = require('lift-it'),
 	lift = liftIt('./api')
@@ -232,10 +232,10 @@ api.run('item/create', {value: 10}, function (err, response) {
 ```
 
 ## Custom plugins
-A plugin is a function like `function (action) {}`. That function is called once for every file that is found in the lifted folder. Creating your own plugin is that simple:
+A plugin is a function like `function (action, lifter) {}`. That function is called once for every file that is found in the lifted folder. Creating your own plugin is that simple:
 
 ```js
-var myPlugin = function (action) {
+var myPlugin = function (action, lifter) {
 	// do something with the action, like checking something
 	if (action.name.indexOf('drop')) {
 		throw new Error('Sorry, we do not put up with dropping things...')
@@ -243,9 +243,9 @@ var myPlugin = function (action) {
 	
 	// add a filter to every action to delay them by 1s
 	action.filters.push(function (body, success) {
-		setTimeout(function () {
-			success()
-		}, 1e3)
+		setTimeout(success, 1e3)
 	})
 }
 ```
+
+Warn: the `lifter` object should not be modified. It should be treated as read-only.
