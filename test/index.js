@@ -11,7 +11,7 @@ it('should lift a folder', function () {
 })
 
 it('should list all actions', function () {
-	api.actions.should.have.length(1)
+	api.actions.should.have.length(2)
 })
 
 it('should let actions be executed', function (done) {
@@ -23,6 +23,14 @@ it('should let actions be executed', function (done) {
 		response.should.be.eql({
 			id: 12
 		})
+		done()
+	})
+})
+
+it('should store errors created by ill files', function (done) {
+	api.get('error').error.should.be.an.Error
+	api.run('error', function (err) {
+		err.should.be.equal(api.get('error').error)
 		done()
 	})
 })
