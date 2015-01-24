@@ -159,7 +159,7 @@ options = {
 	// The export property name
 	exportName: 'fields',
 	// Whether to error out if the file does not export it
-	optional: true,
+	optional: false,
 	// Which argument of 'run' to validate
 	// The default will check the arg0 in: lifted.run(action, arg0, arg1, ..., callback)
 	position: 0,
@@ -193,6 +193,8 @@ api.run('item/create', {}, function (err) {
 	// err is new Error('I was expecting a value in name')
 })
 ```
+
+This plugin will set `action.module[exportName]` to `validate.parse(action.module[exportName])`.
 
 ### Filters
 Add support for filters. Filters are functions executed sequentially before the handler. One example of their use is implementing authentication. Get it with `require('lift-it').filters(folder)`.
