@@ -77,6 +77,9 @@ The available bundled plugins are:
 A function with one parameter, the folder path to scan: `require('lift-it')(folder)`.
 Returns a `lifter` object.
 
+### require('lift-it').lean()
+Do a lean lift. See `lifter.lean()`. Returns a lifted instance
+
 ### lifter.use(plugIn)
 Add the given plugin to the lift process. Read more about available and custom plugins bellow
 
@@ -92,6 +95,13 @@ This returns a `lifted` object.
 
 By default (`failHard` false), if lifting an action throws, the error will be stored in `action.error` and `action.run()` will always answer with that error. If `failHard` is set to true, the call to `lifter.lift()` will not catch those exceptions.
 
+### lifter.leanLift()
+Run the lean lift process, that is, only look for file names. This will not require files, nor apply plugins.
+
+This returns a `lifted` object with the `lean` flag on. No action can be executed on it.
+
+This is useful if you just want to check action names, not execute them.
+
 ### lifted.get(name)
 Return an action by name. Return an `action` object (or `null` if not found).
 
@@ -104,6 +114,9 @@ If profile is enabled, the last argument for `callback` is the profile data.
 
 ### lifted.actions
 An array of `action` objects
+
+### lifted.lean
+A boolean. If `true`, this is a lean lift (see `lifter.leanLift()`), so no action can be executed.
 
 ### action.path
 File path, like `'/api/item/create.js'`

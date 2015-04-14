@@ -1,4 +1,4 @@
-/*globals it*/
+/*globals describe, it*/
 'use strict'
 
 var liftIt = require('../'),
@@ -32,5 +32,26 @@ it('should store errors created by ill files', function (done) {
 	api.run('error', function (err) {
 		err.should.be.equal(api.get('error').error)
 		done()
+	})
+})
+
+describe('lean', function () {
+	var lean
+
+	it('should do a lean lift', function () {
+		lean = liftIt.lean('test/api')
+		lean.actions.should.have.length(2)
+	})
+
+	it('should not run actions', function () {
+		var boom = function () {
+			lean.run('item/create')
+		}
+		boom.should.throw('This Lifted instance is lean, no action can be executed')
+
+		var boom2 = function () {
+			lean.get('item/create').run()
+		}
+		boom2.should.throw('This Action instance is lean, and cannot be executed')
 	})
 })
