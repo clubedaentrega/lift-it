@@ -125,7 +125,10 @@ File path, like `'/api/item/create.js'`
 Action name, like `'item/create'`. This is the relative path to the target folder, without the trailing `'.js'`.
 
 ### action.filters
-An array of filters. This is used by plugins.
+An array of filters, executed before the action handler. This is used by plugins.
+
+### action.postFilters
+An array of post filters, executed after the action handler. This is used by plugins.
 
 ### action.module
 The result of `require`-ing the file. `action.module.handler` is the handler for this action.
@@ -173,11 +176,25 @@ options = {
 	exportName: 'fields',
 	// Whether to error out if the file does not export it
 	optional: false,
-	// Which argument of 'run' to validate
-	// The default will check the arg0 in: lifted.run(action, arg0, arg1, ..., callback)
+	// Check input or output
+	direction: 'input',
+	// Which argument to validate
+	// The default will check the first
 	position: 0,
+	// A function to return a value if the desired input/output is not present
+	getDefaultValue: function () {
+		throw new Error('Insufficient number of arguments')
+	},
 	// If lifter.enableErrorCode is true, which code to use in error(code, msg)
 	code: 101,
+	// A function to handle error cases
+	errorHandler: function (action, value, err) {
+		// `action` is an Action instance
+		// `value` is the offending value
+		// `err` is a lifter.errorClass instance
+		// `err.code` is `options.code`
+		throw err
+	},
 	// Let you define your own custom types
 	// See doc on validate-fields module for that
 	defineTypes: function (validate) {},
@@ -253,14 +270,22 @@ A plugin is a function like `function (action, lifter) {}`. That function is cal
 
 ```js
 var myPlugin = function (action, lifter) {
-	// do something with the action, like checking something
+	// Do something with the action, like checking something
 	if (action.name.indexOf('drop')) {
 		throw new Error('Sorry, we do not put up with dropping things...')
 	}
 	
-	// add a filter to every action to delay them by 1s
+	// Add a filter to every action to delay them by 1s
 	action.filters.push(function (body, success) {
 		setTimeout(success, 1e3)
+	})
+	
+	// Add a post filter to check something
+	action.postFilters.push(function (response, success) {
+		if (typeof response.status !== 'string') {
+			throw new Error('Response should have the status field')
+		}
+		success(response)
 	})
 }
 ```
