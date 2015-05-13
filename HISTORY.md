@@ -1,3 +1,6 @@
+# 2.0.0
+* Changed: validate-fields@3.0.0
+
 # 1.3.3
 * Fixed: call success() after errorHandler (if it does not throw)
 
