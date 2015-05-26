@@ -108,9 +108,14 @@ Return an action by name. Return an `action` object (or `null` if not found).
 ### lifted.run(name, ...args, callback)
 Run the action with the given arguments. `callback(err,...output)` is executed when done. The action is executed in its own domain, see [run-it](https://www.npmjs.com/package/run-it) for more info about that.
 
-Throws if (and only if) no action with the given name is found.
+Throws if no action with the given name is found.
 
 If profile is enabled, the last argument for `callback` is the profile data.
+
+### lifted.getRunner(name)
+Return a run-it runner for the given action. Call `runner.exec(...args, callback)` to actually execute the action. See `action.getRunner()`.
+
+Throws if no action with the given name is found.
 
 ### lifted.actions
 An array of `action` objects
@@ -141,6 +146,11 @@ If this action failed in the lifting process, this will be the error that caused
 
 ### action.run(...args, callback)
 Run this action. This is the same as `lifted.run(action.name, ...args, callback)`. If `action.error` is not `null`, this will always call `callback(action.error)` (but still async).
+
+### action.getRunner()
+Return the run-it runner for the action. Call `runner.exec(...args, callback)` to actually execute the action.
+
+This is useful to make some adhoc changes to the runner, like `runner.runInfo(info).profile(true).exec(...args, callback)`. See docs on run-it.
 
 ## Available plugins
 

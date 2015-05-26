@@ -1,3 +1,6 @@
+# 2.1.0
+* Added: `lifted.getRunner()` and `action.getRunner()`
+
 # 2.0.0
 * Changed: validate-fields@3.0.0
 
