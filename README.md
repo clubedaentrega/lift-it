@@ -88,12 +88,10 @@ Add the given plugin to the lift process. Read more about available and custom p
 ### lifter.enableErrorCode
 Change settings of [run-it](https://www.npmjs.com/package/run-it). Must be changed only before `lifter.lift()` is called.
 
-### lifter.lift([failHard=false])
+### lifter.lift()
 Run the lift process (sync), throws if any error happens. For each `*.js` file in the target folder, all plugins will be executed in the order they were 'use'd.
 
 This returns a `lifted` object.
-
-By default (`failHard` false), if lifting an action throws, the error will be stored in `action.error` and `action.run()` will always answer with that error. If `failHard` is set to true, the call to `lifter.lift()` will not catch those exceptions.
 
 ### lifter.leanLift()
 Run the lean lift process, that is, only look for file names. This will not require files, nor apply plugins.
@@ -141,11 +139,8 @@ The result of `require`-ing the file. `action.module.handler` is the handler for
 ### action.profile
 A boolean that flags whether profiling is enabled for this action.
 
-### action.error
-If this action failed in the lifting process, this will be the error that caused that. Otherwise, this is `null`. An action may fail due to missing or invalid export values or even invalid JS syntax.
-
 ### action.run(...args, callback)
-Run this action. This is the same as `lifted.run(action.name, ...args, callback)`. If `action.error` is not `null`, this will always call `callback(action.error)` (but still async).
+Run this action. This is the same as `lifted.run(action.name, ...args, callback)`.
 
 ### action.getRunner()
 Return the run-it runner for the action. Call `runner.exec(...args, callback)` to actually execute the action.
