@@ -1,3 +1,10 @@
+# 3.0.0
+
+* Added: option to disable recursive scan [#3](https://github.com/clubedaentrega/lift-it/issues/3)
+
+## Breaking change
+* `failHard` option removed. See [#4](https://github.com/clubedaentrega/lift-it/issues/4)
+
 # 2.1.0
 * Added: `lifted.getRunner()` and `action.getRunner()`
 

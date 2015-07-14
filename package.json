@@ -1,6 +1,6 @@
 {
 	"name": "lift-it",
-	"version": "2.1.0",
+	"version": "3.0.0",
 	"author": "Sitegui <sitegui@sitegui.com.br>",
 	"description": "Forget about maintaining routes files, use dynamic routes created from files in a folder",
 	"main": "./index.js",
