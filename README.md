@@ -83,6 +83,9 @@ Do a lean lift. See `lifter.lean()`. Returns a lifted instance
 ### lifter.use(plugIn)
 Add the given plugin to the lift process. Read more about available and custom plugins bellow
 
+### lifter.recursive
+Whether the folder should be scanned recursively or not. The default value is `true`.
+
 ### lifter.profile
 ### lifter.errorClass
 ### lifter.enableErrorCode

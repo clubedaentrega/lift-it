@@ -27,6 +27,12 @@ it('should let actions be executed', function (done) {
 	})
 })
 
+it('should not recurse if told not to', function () {
+	var lifter = liftIt('test/api')
+	lifter.recursive = false
+	lifter.lift().actions.should.have.length(0)
+})
+
 describe('lean', function () {
 	var lean
 
