@@ -19,7 +19,7 @@ it('should let actions be executed', function (done) {
 		name: 'Water',
 		value: 17
 	}, function (err, response) {
-		should(err).be.null
+		should(err).be.null()
 		response.should.be.eql({
 			id: 12
 		})
