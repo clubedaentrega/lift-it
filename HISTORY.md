@@ -1,5 +1,7 @@
-# 3.0.0
+# 3.0.1
+* Changed: bump dependencies
 
+# 3.0.0
 * Added: option to disable recursive scan [#3](https://github.com/clubedaentrega/lift-it/issues/3)
 
 ## Breaking change
