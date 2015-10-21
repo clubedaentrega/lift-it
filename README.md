@@ -1,4 +1,7 @@
 # Lift It
+[![Build Status](https://travis-ci.org/clubedaentrega/lift-it.svg?branch=master)](https://travis-ci.org/clubedaentrega/lift-it)
+[![Inline docs](http://inch-ci.org/github/clubedaentrega/lift-it.svg?branch=master)](http://inch-ci.org/github/clubedaentrega/lift-it)
+[![Dependency Status](https://david-dm.org/clubedaentrega/lift-it.svg)](https://david-dm.org/clubedaentrega/lift-it)
 
 Forget about maintaining routes files, use dynamic routes created from files in a folder
 
