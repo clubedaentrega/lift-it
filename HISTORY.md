@@ -1,3 +1,6 @@
+# 3.1.0
+* Changed: ignore if folder is missing [#1](https://github.com/clubedaentrega/lift-it/issues/1)
+
 # 3.0.1
 * Changed: bump dependencies
 
