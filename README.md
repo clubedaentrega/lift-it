@@ -235,7 +235,7 @@ api.run('item/create', {}, function (err) {
 })
 ```
 
-This plugin will set `action.module[exportName]` to `validate.parse(action.module[exportName])`.
+This plugin will set `action.module[exportName+'-schema']` to `validate.parse(action.module[exportName])`.
 
 ### Filters
 Add support for filters. Filters are functions executed sequentially before the handler. One example of their use is implementing authentication. Get it with `require('lift-it').filters(folder)`.

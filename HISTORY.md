@@ -1,3 +1,7 @@
+# 4.0.0
+* Changed: the validate plugin does not overwrite the exported value any more
+* Added: the validate plugin exposes the parsed schema on '${exportName}-schema'
+
 # 3.1.0
 * Changed: ignore if folder is missing [#1](https://github.com/clubedaentrega/lift-it/issues/1)
 
