@@ -1,3 +1,6 @@
+# 4.0.1
+* Changed: updated `validate-fields@3.5.0`
+
 # 4.0.0
 * Changed: the validate plugin does not overwrite the exported value any more
 * Added: the validate plugin exposes the parsed schema on '${exportName}-schema'
