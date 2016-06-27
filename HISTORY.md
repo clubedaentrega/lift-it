@@ -1,3 +1,6 @@
+# 4.1.0
+* Added: Lifter#requireFile callback to allow the user to hook into the requiring logic
+
 # 4.0.1
 * Changed: updated `validate-fields@3.5.0`
 

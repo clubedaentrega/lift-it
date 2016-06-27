@@ -89,6 +89,9 @@ Add the given plugin to the lift process. Read more about available and custom p
 ### lifter.recursive
 Whether the folder should be scanned recursively or not. The default value is `true`.
 
+### lifter.requireFile
+A callback to handle requiring a file. This allows one to completly change the semantics of a required file. The default value is `function (require, path) { return require(path) }`.
+
 ### lifter.profile
 ### lifter.errorClass
 ### lifter.enableErrorCode
