@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"jsdoc": "^3.4.0",
-		"mocha": "^2.4.5",
-		"should": "^8.3.2"
+		"mocha": "^2.5.3",
+		"should": "^9.0.2"
 	}
 }
