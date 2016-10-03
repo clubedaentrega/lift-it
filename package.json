@@ -1,6 +1,6 @@
 {
 	"name": "lift-it",
-	"version": "4.1.0",
+	"version": "5.0.0",
 	"author": "Sitegui <sitegui@sitegui.com.br>",
 	"description": "Forget about maintaining routes files, use dynamic routes created from files in a folder",
 	"main": "./index.js",
@@ -10,8 +10,8 @@
 	},
 	"keywords": [],
 	"dependencies": {
-		"run-it": "^2.1.0",
-		"validate-fields": "^3.5.0"
+		"run-it": "^3.0.0",
+		"validate-fields": "^3.6.1"
 	},
 	"license": "MIT",
 	"engines": {
@@ -22,8 +22,8 @@
 		"docs": "jsdoc -d docs -c docs.json -R README.md"
 	},
 	"devDependencies": {
-		"jsdoc": "^3.4.0",
-		"mocha": "^2.5.3",
-		"should": "^9.0.2"
+		"jsdoc": "^3.4.2",
+		"mocha": "^3.1.0",
+		"should": "^11.1.0"
 	}
 }

@@ -1,3 +1,10 @@
+# 5.0.0
+* Changed: major update run-it@v3
+* Changed: add support for object with extra properties in `error()` functions
+
+## Breaking changes
+* Removed support for formats in `error()` functions
+
 # 4.1.0
 * Added: Lifter#requireFile callback to allow the user to hook into the requiring logic
 
