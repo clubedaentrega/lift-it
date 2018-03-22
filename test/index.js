@@ -1,24 +1,24 @@
-/*globals describe, it*/
+/* globals describe, it*/
 'use strict'
 
-var liftIt = require('../'),
+let liftIt = require('../'),
 	should = require('should')
 
-var api
+let api
 
-it('should lift a folder', function () {
+it('should lift a folder', () => {
 	api = liftIt('test/api').lift()
 })
 
-it('should list all actions', function () {
+it('should list all actions', () => {
 	api.actions.should.have.length(1)
 })
 
-it('should let actions be executed', function (done) {
+it('should let actions be executed', done => {
 	api.run('item/create', {
 		name: 'Water',
 		value: 17
-	}, function (err, response) {
+	}, (err, response) => {
 		should(err).be.null()
 		response.should.be.eql({
 			id: 12
@@ -27,27 +27,27 @@ it('should let actions be executed', function (done) {
 	})
 })
 
-it('should not recurse if told not to', function () {
-	var lifter = liftIt('test/api')
+it('should not recurse if told not to', () => {
+	let lifter = liftIt('test/api')
 	lifter.recursive = false
 	lifter.lift().actions.should.have.length(0)
 })
 
-describe('lean', function () {
-	var lean
+describe('lean', () => {
+	let lean
 
-	it('should do a lean lift', function () {
+	it('should do a lean lift', () => {
 		lean = liftIt.lean('test/api')
 		lean.actions.should.have.length(1)
 	})
 
-	it('should not run actions', function () {
-		var boom = function () {
+	it('should not run actions', () => {
+		function boom() {
 			lean.run('item/create')
 		}
 		boom.should.throw('This Lifted instance is lean, no action can be executed')
 
-		var boom2 = function () {
+		function boom2() {
 			lean.get('item/create').run()
 		}
 		boom2.should.throw('This Action instance is lean, and cannot be executed')

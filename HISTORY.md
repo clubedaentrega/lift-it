@@ -1,3 +1,8 @@
+# 6.0.0
+## Breaking change
+* Dropped support for Node.JS < 6
+* Update `validate-fields@4.0.0`
+
 # 5.0.0
 * Changed: major update run-it@v3
 * Changed: add support for object with extra properties in `error()` functions

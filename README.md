@@ -6,12 +6,12 @@
 Forget about maintaining routes files, use dynamic routes created from files in a folder
 
 ## Install
-`npm install lift-it --save`
+`npm install lift-it`
 
 ## Basic usage
 ```js
 // Lift the 'api' folder
-var api = require('lift-it')('./api').lift()
+let api = require('lift-it')('./api').lift()
 
 // Execute the file ./api/item/create.js
 api.run('item/create', {
@@ -46,11 +46,11 @@ This module can be easily used with express (or any other route-based web framew
 An example of simple JSON-based POST api:
 ```js
 // Express
-var app = require('express')()
+let app = require('express')()
 app.use(require('body-parser').json())
 
 // Lift
-var api = require('lift-it')('./api').lift()
+let api = require('lift-it')('./api').lift()
 
 // Set routes
 api.actions.forEach(function (action) {
@@ -171,10 +171,10 @@ module.exports.handler = function (body, success, error) {
 
 Use:
 ```js
-var liftIt = require('lift-it'),
+let liftIt = require('lift-it'),
 	lift = liftIt('./api')
 lift.use(liftIt.profile())
-var api = lift.lift()
+let api = lift.lift()
 api.run('item/create', item, function (err, response, profileData) {
 	// ...
 })
@@ -229,10 +229,10 @@ module.exports.handler = function (body, success, error) {
 ```
 
 ```js
-var liftIt = require('lift-it'),
+let liftIt = require('lift-it'),
 	lift = liftIt('./api')
 lift.use(liftIt.validate())
-var api = lift.lift()
+let api = lift.lift()
 api.run('item/create', {}, function (err) {
 	// err is new Error('I was expecting a value in name')
 })
@@ -270,10 +270,10 @@ module.exports.handler = function (body, moreData, success, error) {
 
 If this filter file path is `'filters/myFilter.js'`, the main file (the one that lifts everything) may be:
 ```js
-var liftIt = require('lift-it'),
+let liftIt = require('lift-it'),
 	lift = liftIt('./api')
 lift.use(liftIt.filters('./filters'))
-var api = lift.lift()
+let api = lift.lift()
 api.run('item/create', {value: 10}, function (err, response) {
 	// ...
 })
@@ -283,7 +283,7 @@ api.run('item/create', {value: 10}, function (err, response) {
 A plugin is a function like `function (action, lifter) {}`. That function is called once for every file that is found in the lifted folder. Creating your own plugin is that simple:
 
 ```js
-var myPlugin = function (action, lifter) {
+let myPlugin = function (action, lifter) {
 	// Do something with the action, like checking something
 	if (action.name.indexOf('drop')) {
 		throw new Error('Sorry, we do not put up with dropping things...')
