@@ -201,6 +201,8 @@ options = {
 	},
 	// If lifter.enableErrorCode is true, which code to use in error(code, msg)
 	code: 101,
+	// If lifter.enableErrorCode is true, which code to use in error(HTTPStatusCode, code, msg)
+	HTTPStatusCode: 500,
 	// A function to handle error cases
 	errorHandler: function (action, value, err) {
 		// `action` is an Action instance
