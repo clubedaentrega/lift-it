@@ -22,7 +22,7 @@ api.run('item/create', {
 })
 ```
 
-Lift-it scans recursively a folder for `*.js` files. Those files should export a `handler` function, executed when someones 'run' them.
+Lift-it scans recursively a folder for `*.js` files. Those files should export a `handler` function, executed when someones 'run' them. The only ignored file is `errors.js`.
 
 An example of 'item/create':
 ```js
